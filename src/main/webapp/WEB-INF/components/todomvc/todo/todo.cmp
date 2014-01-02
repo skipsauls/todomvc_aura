@@ -1,0 +1,18 @@
+<aura:component>
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+	<aura:attribute name="todo" type="Object"/>
+	<aura:attribute name="mode" type="String" default="view"/>
+	<aura:registerEvent name="updateTodo" type="todomvc:updateTodo"/>
+	<aura:registerEvent name="deleteTodo" type="todomvc:deleteTodo"/>
+	
+	<li class="{!(v.mode == 'edit' ? 'editing' : '') + ' ' + (m.completed == true ? 'completed' : '')}" dblclick="{!v.edit}">
+		<div class="view">
+  			<input type="checkbox" class="toggle" checked="{!m.completed ? 'checked' : ''}" onchange="{!c.complete}" />
+			<aura:if isTrue="{!v.mode == 'view'}">
+				<label ondblclick="{!c.edit}">{!m.value}</label>
+				<ui:button class="destroy" label="" theme="" press="{!c.remove}" />
+			</aura:if>
+		</div>
+		<ui:inputText aura:id="new-todo" class="new-todo edit" value="{!m.value}" change="{!c.update}" blur="{!c.update}" placeholder="{!v.placeholder}" />
+	</li>
+</aura:component>
